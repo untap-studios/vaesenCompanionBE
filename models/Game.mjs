@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const gameSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,
@@ -30,12 +25,12 @@ const gameSchema = new mongoose.Schema({
       ref: "PlayerCharacter",
     },
   ],
-//   nonPlayerCharacters: [
-//     {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "NonPlayerCharacter",
-//     },
-//   ],
+  nonPlayerCharacters: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "NonPlayerCharacter",
+    },
+  ],
 //     gameMaster: {
 //         type: mongoose.Schema.Types.ObjectId,
 //         ref: "User",
