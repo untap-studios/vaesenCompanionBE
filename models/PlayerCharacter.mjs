@@ -42,13 +42,13 @@ const CharacterSheetSchema = new Schema({
   ],
   advantages: [
     {
-      name: { type: String, required: true },
+      name: { type: String },
       description: { type: String },
     },
   ],
   insightsAndDefects: [
     {
-      name: { type: String, required: true },
+      name: { type: String },
       description: { type: String },
     },
   ],
@@ -61,7 +61,7 @@ const CharacterSheetSchema = new Schema({
   ],
   armor: [
     {
-      name: { type: String, required: true },
+      name: { type: String },
       description: { type: String },
       protection: { type: Number },
       agility: { type: Number },
@@ -72,11 +72,12 @@ const CharacterSheetSchema = new Schema({
       name: { type: String, required: true },
       description: { type: String },
       damage: { type: Number },
-      range: { type: Number },
+      longRange: { type: Number },
+      shortRange: { type: Number },
       bonus: { type: Number },
     },
   ],
-  memento: [
+  mementos: [
     {
       name: { type: String, required: true },
       description: { type: String },
@@ -85,15 +86,14 @@ const CharacterSheetSchema = new Schema({
   attributes: [
     {
       name: { type: String, required: true },
-      value: { type: Number },
-      description: { type: String },
+      value: { type: Number }
     },
   ],
   resources: { type: Number },
   conditions: [
     {
-      type: { type: String, required: true },
-      name: { type: String, required: true },
+      type: { type: String },
+      name: { type: String },
       description: { type: String },
       value: { type: Number },
     },
@@ -102,7 +102,6 @@ const CharacterSheetSchema = new Schema({
     {
       name: { type: String, required: true },
       attributeType: { type: String },
-      description: { type: String },
       value: { type: Number },
     },
   ],
