@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
   playerCharacters: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'PlayerCharacter',
+      ref: 'CharacterSheet',
     },
   ],
   createdAt: {

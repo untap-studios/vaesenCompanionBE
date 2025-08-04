@@ -40,7 +40,7 @@ export const getUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate('playerCharacters');
     if (!user) {
       return res.status(404).json({
         status: "fail",

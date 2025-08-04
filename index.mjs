@@ -3,6 +3,7 @@ import express from "express";
 import authRoutes from "./routes/authRoutes.mjs";
 import userRoutes from "./routes/userRoutes.mjs";
 import gameRoutes from "./routes/gameRoutes.mjs";
+import playerCharacterRoutes from "./routes/playerCharacterRoutes.mjs";
 // import verifyToken from "./middleware/authMiddleware.mjs";
 import cors from "cors";
 import db from './db/conn.mjs';
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/games", gameRoutes);
+app.use("/api/player-characters", playerCharacterRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
