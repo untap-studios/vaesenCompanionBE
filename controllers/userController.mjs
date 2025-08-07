@@ -8,7 +8,7 @@ export const createUser = async (req, res) => {
       name,
       email,
       password,
-      image
+      image,
     });
     res.status(201).json({
       status: "success",
@@ -36,11 +36,13 @@ export const getUsers = async (req, res) => {
     console.error("Error fetching users:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 export const getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate('playerCharacters');
+    const user = await User.findById(req.params.id)
+      .populate("playerCharacters")
+      .populate("games");
     if (!user) {
       return res.status(404).json({
         status: "fail",
@@ -77,12 +79,11 @@ export const updateUser = async (req, res) => {
         user,
       },
     });
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 export const deleteUser = async (req, res) => {
   try {
@@ -101,4 +102,27 @@ export const deleteUser = async (req, res) => {
     console.error("Error deleting user:", error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
+
+export const userSearch = async (req, res) => {
+  const query = req.query.q;
+
+  if (!query || query.trim() === "") {
+    return res.json([]);
+  }
+
+  try {
+    const users = await User.find({
+      name: { $regex: `^${query}`, $options: "i" },
+    })
+      .limit(10)
+      .select("name email");
+
+    const results = users.map((user) => user);
+
+    res.json({data: results});
+  } catch (err) {
+    console.error("Search error:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+};

@@ -1,24 +1,30 @@
-import './loadenvironment.mjs';
+import "./loadenvironment.mjs";
 import express from "express";
 import authRoutes from "./routes/authRoutes.mjs";
+import uploadRoutes from "./routes/uploadRoutes.mjs";
 import userRoutes from "./routes/userRoutes.mjs";
 import gameRoutes from "./routes/gameRoutes.mjs";
 import playerCharacterRoutes from "./routes/playerCharacterRoutes.mjs";
 // import verifyToken from "./middleware/authMiddleware.mjs";
 import cors from "cors";
-import db from './db/conn.mjs';
+import db from "./db/conn.mjs";
+import { conditionalBodyParser } from "./conditionalBodyParser.mjs";
 
 const app = express();
-app.use(cors({origin: "*"}));
+app.use(cors({ origin: "*" }));
 const PORT = process.env.PORT || 8080;
 db();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', authRoutes);
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+app.use(conditionalBodyParser);
+
+app.use("/api", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/player-characters", playerCharacterRoutes);
+
+app.use("/api/upload", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -26,7 +32,6 @@ app.get("/", (req, res) => {
     message: "Welcome to the User Management API",
   });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
