@@ -11,11 +11,11 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 // User registration
 router.post("/register", async (req, res) => {
   try {
-    const { name, image, email, password } = req.body;
+    const { name, imageUrl, email, password } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({ name, image, email, password: hashedPassword });
+    const user = new User({ name, imageUrl, email, password: hashedPassword });
     await user.save();
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
